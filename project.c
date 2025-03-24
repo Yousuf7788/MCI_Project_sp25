@@ -9,7 +9,9 @@ const int LEFT_IN2  = 25;  // PD2 - Left Motor Direction 2
 const int RIGHT_IN3 = 19;  // PB2 - Right Motor Direction 1 
 const int RIGHT_IN4 = 38;  // PB3 - Right Motor Direction 2
 
-
+cmFront = getDistance(trigFront, echoFront);
+cmLeft = getDistance(trigLeft, echoLeft);
+cmRight = getDistance(trigRight, echoRight);
 
 int straight_speed = 255;  // Speed for straight-line motion (0-255) 
 int stop_distance = 10;    // Stop when obstacle is within 30 cm
@@ -36,7 +38,26 @@ void loop() {
 
     Move_Forward();
     delay(5);  // Small delay for sensor stabilization
+    if (cmFront > 0 && cmFront < stop_distance) {
 
+        Move_Right();
+          // Serial.println("Obstacle detected! Turning Right.");
+      } 
+      // Adjust right if too close to left wall
+      else if (cmLeft > 0 && cmLeft < wall_distance) {
+          Serial.println("Too close to left wall, adjusting right.");
+          Adjust_Right();
+      } 
+      // Adjust left if too close to right wall
+      else if (cmRight > 0 && cmRight < wall_distance) {
+          Serial.println("Too close to right wall, adjusting left.");
+          Adjust_Left();
+      }
+      // Move forward normally
+      else { 
+          Move_Forward();
+  
+}
 }
 
 void Move_Right() { 
