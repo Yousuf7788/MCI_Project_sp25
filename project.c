@@ -99,3 +99,24 @@ void Stop_Motors() {
     analogWrite(LEFT_PWM, 0);  
     analogWrite(RIGHT_PWM, 0); 
 }
+
+void Adjust_Right() { 
+    digitalWrite(LEFT_IN1, LOW); 
+    digitalWrite(LEFT_IN2, HIGH); 
+    digitalWrite(RIGHT_IN3, LOW); 
+    digitalWrite(RIGHT_IN4, HIGH); 
+    analogWrite(LEFT_PWM, turn_speed);  
+    analogWrite(RIGHT_PWM, correction_speed); 
+}
+
+
+
+// Move Slightly Left (Correct right wall proximity)
+void Adjust_Left() { 
+    digitalWrite(LEFT_IN1, LOW); 
+    digitalWrite(LEFT_IN2, HIGH); 
+    digitalWrite(RIGHT_IN3, LOW); 
+    digitalWrite(RIGHT_IN4, HIGH); 
+    analogWrite(LEFT_PWM, correction_speed);  
+    analogWrite(RIGHT_PWM, turn_speed);  
+}
